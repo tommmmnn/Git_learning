@@ -66,7 +66,7 @@ $ git log -S "Here"       从commit的内容中查找
 $ git log --oneline --since="9am" --until="12am"        查找某一段时间的commit
 ```
 - 删除文件
-Git对删除文件的改动和修改文件是一样的，使用`rm`命令删除文件之后，需要再使用`add`和`commit`来彻底删除文件。或者使用`git rm`直接将文件放入暂存区。若只是想让文件脱离Git控制而不删除，可以添加`--cached`
+Git对删除文件的改动和修改文件是一样的，使用`rm`命令删除文件之后（若想删除目录则在rm后加入-r），需要再使用`add`和`commit`来彻底删除文件。或者使用`git rm`直接将文件放入暂存区。若只是想让文件脱离Git控制而不删除，可以添加`--cached`。
 ```sh
 $ git rm <filename>
 $ git rm <filename> --cached
@@ -76,6 +76,50 @@ $ git rm <filename> --cached
 ```sh
 $ git mv <filename> <new filename>
 ```
+- 修改commit记录
+```sh
+$ git commit --amend -m "msg"       修改最后一次commit的信息
+$ git commit --amend --no-edit      将文件并入上一次的commit（要先放到暂存库里）
+```
+- 新目录交给git管理
+在创建新目录时，若里面没有文件则git会无法识别，若想让git识别可以加个`.keep`或`.gitkeep`的空文件。
+```
+$ touch <dir>/.keep
+```
+- 让文件不受Git管理
+可以通过在目录里添加`.gitignore`文件，并在文件中配置哪些文件需要git忽略。
+```
+# 忽略secret.yml 文件
+secret.yml
+# 忽略config目录下的database.yml文件
+config/database.yml
+# 忽略db目录下所有后缀是 .sqlite3的文件
+/db/*.sqlite3
+# 忽略所有后缀是 .tmp的文件
+*.tmp
+```
+```
+$ git clean -fx     清除被忽略的文件
+```
+- 查看文件的commit记录
+```sh
+$ git log <filename>        查看文件的commit记录
+$ git log -p <filename>        查看文件的commit时做了什么
+```
+- 查看修改者做的事
+```
+$ git blame <filename>      查看某一行代码是谁写的
+$ git blame -L 5,10 <filename>      查看5-10行代码是谁写的
+```
+- 找回删除的文件
+```sh
+$ git checkout <filename>       找回rm的文件
+$ git checkout .                找回所有rm的文件
+$ git checkout HEAD~2 <filename>        用上两个版本的文件覆盖当前目录中的文件
+```
+
+
+
 
 
 
