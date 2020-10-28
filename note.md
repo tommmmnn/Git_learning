@@ -105,6 +105,8 @@ $ git clean -fx     清除被忽略的文件
 ```sh
 $ git log <filename>        查看文件的commit记录
 $ git log -p <filename>        查看文件的commit时做了什么
+$ git log --graph         以图表形式输出日志
+$ git reflog            查看所有历史日志
 ```
 - 查看修改者做的事
 ```
@@ -121,7 +123,7 @@ $ git checkout HEAD~2 <filename>        用上两个版本的文件覆盖当前�
 `reset`命令可以搭配`--mixed`、`--soft`、`--hard`，分别把拆出来的文件放回工作目录、放回暂存区和直接删除。相当于去到某个`commit`，但是会把拆出来的文件放到不同位置保存。SHA-1可以通过`git log`查找，也可以通过`git reflog`查找，通过后者可以把之前`--hard`删除的找回。
 ```
 $ git reset <SHA-1>^     回到前n次commit（n为^的数量）
-$ git reset master^     
+$ git reset master^
 $ git reset HEAD^
 $ git reset <SHA-1>      回到编码指向的commit，可以往前也可以往后
 ```
@@ -138,12 +140,5 @@ $ printf "Hello, 5xRuby" | git hash-object --stdin
 该命令会输出字符串所对应的SHA-1编码，该编码只与输入有关，与时间等无关。Git中有四种对象：`Blob`、`Tree`、`Commit`、`Tag`，不同对象编码方式略有差异。
 ```sh
 $ git cat-file -t <SHA-1>     输出SHA-1代表对象的类型
-$ git cat-file -p <SHA-1>     输出SHA-1指向对象的内容 
+$ git cat-file -p <SHA-1>     输出SHA-1指向对象的内容
 ```
-
-
-
-
-
-
-
